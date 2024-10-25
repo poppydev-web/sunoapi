@@ -9,9 +9,9 @@ export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
       const body = await req.json();
-      const { lyrics, tags, title, make_instrumental, model, wait_audio, negative_tags } = body;
+      const { lyrics, style_of_song, title, make_instrumental, model, wait_audio, negative_tags } = body;
       const audioInfo = await (await sunoApi).custom_generate(
-        lyrics, tags, title,
+        lyrics, style_of_song, title,
         Boolean(make_instrumental),
         model || DEFAULT_MODEL,
         Boolean(wait_audio),
