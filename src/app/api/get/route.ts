@@ -5,6 +5,12 @@ import { corsHeaders } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
+  const apiKey = req.headers.get('x-api-key');
+
+  // Check if the apiKey matches the expected value
+  if (apiKey !== 'rafaelsecretkey') {
+    return NextResponse.json({ error: 'Invalid Request' }, { status: 403 });
+  }
   if (req.method === 'GET') {
     try {
       const url = new URL(req.url);

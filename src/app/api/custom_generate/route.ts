@@ -8,6 +8,11 @@ export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
+      const apiKey = req.headers.get('x-api-key');
+      // Check if the apiKey matches the expected value
+      if (apiKey !== 'rafaelsecretkey') {
+        return NextResponse.json({ error: 'Invalid Request' }, { status: 403 });
+      }
       const body = await req.json();
       const { lyrics, style_of_song, title, make_instrumental, model, wait_audio, negative_tags } = body;
       const audioInfo = await (await sunoApi).custom_generate(
